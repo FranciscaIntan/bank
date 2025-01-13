@@ -20,19 +20,19 @@ class Pinjaman: AuditColumns() {
     @Column(columnDefinition = "BIGINT UNSIGNED")
     var id: Long = 0
 
-    @Column(columnDefinition = "VARCHAR(255), nullable = false")
+    @Column(columnDefinition = "VARCHAR(255)", nullable = false)
     var namaNasabah: String = ""
 
-    @Column(columnDefinition = "VARCHAR(16), nullable = false")
+    @Column(columnDefinition = "VARCHAR(16)", nullable = false)
     var nikKtp: String = ""
 
-    @Column(columnDefinition = "BIGINT UNSIGNED, nullable = false")
+    @Column(columnDefinition = "BIGINT UNSIGNED", nullable = false)
     var jumlahPinjaman: Int = 0
 
-    @Column(columnDefinition = "BIGINT UNSIGNED, nullable = false")
+    @Column(columnDefinition = "BIGINT UNSIGNED", nullable = false)
     var lamaPinjaman: Int = 0
 
-    @Column(columnDefinition = "VARCHAR(15), nullable = false")
+    @Column(columnDefinition = "VARCHAR(15)", nullable = false)
     var nomorFaktur: String? = ""
 
     var tanggalJatuhTempo: Timestamp? = null
@@ -41,10 +41,10 @@ class Pinjaman: AuditColumns() {
     @JsonIgnore
     var cicilan: MutableList<Cicilan> = mutableListOf()
 
-    @Column(columnDefinition = "VARCHAR(10), nullable = false")
+    @Column(columnDefinition = "VARCHAR(10)", nullable = false)
     var statusPinjaman: String = ""
 
-    @Column(columnDefinition = "BIGINT UNSIGNED, nullable = false")
+    @Column(columnDefinition = "BIGINT UNSIGNED", nullable = false)
     var sisaPinjaman: Int = 0
 
     @OneToMany(mappedBy = "pinjaman", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)

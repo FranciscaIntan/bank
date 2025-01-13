@@ -11,17 +11,17 @@ import java.time.LocalDate
 
 interface CicilanRepository : JpaRepository<Cicilan, Long> {
 
-    @Modifying
-    @Transactional
-    @Query("INSERT INTO cicilan (" +
-            "nomor_faktur, nik_ktp, nominal_cicilan, created_at, updated_at, pinjaman_id" +
-            ") VALUES (" +
-            ":nomorFaktur, :nikKtp, :nominalCicilan, :createdAt, :updatedAt, :pinjamanID)", nativeQuery = true)
-    fun InsertCicilan(
-        nomorFaktur: String, nikKtp: String, nominalCicilan: Int, createdAt: Timestamp, updatedAt: Timestamp, pinjamanID: Long
-    )
-
-    @Query("SELECT LAST_INSERT_ID()", nativeQuery = true)
-    fun getLastInsertId(): Long
+//    @Modifying
+//    @Transactional
+//    @Query("INSERT INTO cicilan (" +
+//            "nomor_faktur, nik_ktp, nominal_cicilan, created_at, updated_at, pinjaman_id" +
+//            ") VALUES (" +
+//            ":nomorFaktur, :nikKtp, :nominalCicilan, :createdAt, :updatedAt, :pinjamanID)", nativeQuery = true)
+//    fun InsertCicilan(
+//        nomorFaktur: String, nikKtp: String, nominalCicilan: Int, createdAt: Timestamp, updatedAt: Timestamp, pinjamanID: Long
+//    )
+//
+//    @Query("SELECT LAST_INSERT_ID()", nativeQuery = true)
+//    fun getLastInsertId(): Long
 
 }

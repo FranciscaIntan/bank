@@ -1,7 +1,11 @@
 package com.bank.bank.controller
 
+import com.bank.bank.dto.`in`.CicilanIn
+import com.bank.bank.dto.out.CicilanOut
+import com.bank.bank.dto.out.ResponseDto
 import com.bank.bank.model.Cicilan
 import com.bank.bank.service.CicilanService
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -13,17 +17,15 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/v1/cicilan")
 class CicilanController(private val cicilanService: CicilanService) {
 
-//    @PostMapping
-//    fun insertCicilan(@RequestBody cicilan: Cicilan): Any = cicilanService.insertCicilan(cicilan)
-
     @PostMapping
-    fun insertCicilan(@RequestBody cicilan: Cicilan): ResponseEntity<Any> {
+    @Transactional
+    fun insertCicilan(@RequestBody cicilan: CicilanIn): ResponseDto<CicilanOut> {
         val insCicilan = cicilanService.insertCicilan(cicilan)
 
-        if (insCicilan is String) {
-            return ResponseEntity("Insert data Cicilan gagal", HttpStatus.BAD_REQUEST) // Jika data tidak ditemukan
+        if (insCicilan != null) {
+            return ResponseDto("Insert data cicilan berhasil", insCicilan) // Jika data tidak ditemukan
         }
-        return ResponseEntity(insCicilan, HttpStatus.OK)
+        return ResponseDto("Insert data cicilan gagal", null)
     }
 
 }

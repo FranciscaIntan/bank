@@ -11,13 +11,13 @@ class Cicilan: AuditColumns() {
     @Column(columnDefinition = "BIGINT UNSIGNED")
     var id: Long = 0
 
-    @Column(columnDefinition = "VARCHAR(15), nullable = false")
+    @Column(columnDefinition = "VARCHAR(15)", nullable = false)
     var nomorFaktur: String = ""
 
-    @Column(columnDefinition = "VARCHAR(16), nullable = false")
+    @Column(columnDefinition = "VARCHAR(16)", nullable = false)
     var nikKtp: String = ""
 
-    @Column(columnDefinition = "BIGINT UNSIGNED, nullable = false")
+    @Column(columnDefinition = "BIGINT UNSIGNED", nullable = false)
     var nominalCicilan: Int = 0
 
     @ManyToOne(fetch = FetchType.LAZY)
