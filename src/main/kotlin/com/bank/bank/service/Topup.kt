@@ -18,7 +18,7 @@ class TopupService(
             if (!pinjaman.isEmpty) {
                 if (pinjaman.get().statusPinjaman == "Berjalan" && pinjaman.get().sisaPinjaman < pinjaman.get().jumlahPinjaman) {
                     val sisaPinjaman = pinjaman.get().sisaPinjaman + topup.nominalTopup
-                    if (pinjaman.get().jumlahPinjaman <= sisaPinjaman) {
+                    if (pinjaman.get().jumlahPinjaman >= sisaPinjaman) {
                         val now = Timestamp(System.currentTimeMillis())
                         topupRepository.InsertTopup(
                             topup.nomorFaktur,

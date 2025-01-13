@@ -30,8 +30,10 @@ interface PinjamanRepository : JpaRepository<Pinjaman, Long> {
     @Query("SELECT COUNT(id) FROM Pinjaman WHERE DATE(createdAt) = DATE(:createdAt)")
     fun CheckPinjamanCountToday(createdAt: Timestamp): Long
 
-    @Query("SELECT p FROM Pinjaman p WHERE p.nikKtp = :nikKtp")
-    fun ViewPinjamanByNIK(nikKtp: String): Optional<Pinjaman>
+//    @Query("SELECT p FROM Pinjaman p WHERE p.nikKtp = :nikKtp")
+//    fun ViewPinjamanByNIK(nikKtp: String): Optional<Pinjaman>
+
+    fun findAllByNikKtp(nikKtp: String): Pinjaman
 
     @Query("SELECT p FROM Pinjaman p WHERE p.nikKtp = :nikKtp AND p.nomorFaktur = :nomorFaktur")
     fun ViewPinjamanByFakturAndNIK(nikKtp: String, nomorFaktur: String): Optional<Pinjaman>

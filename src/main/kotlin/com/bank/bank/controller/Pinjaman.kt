@@ -1,5 +1,8 @@
 package com.bank.bank.controller
 
+import com.bank.bank.dto.ResponseDto
+import com.bank.bank.dto.`in`.PinjamanIn
+import com.bank.bank.dto.out.PinjamanOut
 import com.bank.bank.model.Pinjaman
 import com.bank.bank.service.PinjamanService
 import org.springframework.http.HttpStatus
@@ -19,25 +22,24 @@ class PinjamanController(private val pinjamanService: PinjamanService) {
     //    fun insertPinjaman(@RequestBody pinjaman: Pinjaman): Pinjaman = pinjamanService.insertPinjaman(pinjaman)
 
     @PostMapping
-    fun insertPinjaman(@RequestBody pinjaman: Pinjaman): ResponseEntity<Any> {
+    fun insertPinjaman(@RequestBody pinjaman: PinjamanIn): ResponseDto<PinjamanOut> {
         val insetPinjaman = pinjamanService.insertPinjaman(pinjaman)
-
         if (insetPinjaman != null) {
-            return ResponseEntity(insetPinjaman, HttpStatus.OK) // Mengembalikan body dengan status OK
+            return ResponseDto("ok", insetPinjaman) // Mengembalikan body dengan status OK
         } else {
-            return ResponseEntity("Insert data pinjaman gagal", HttpStatus.BAD_REQUEST) // Jika data tidak ditemukan
+            return ResponseDto("Insert data pinjaman gagal", null) // Jika data tidak ditemukan
         }
     }
 
     @GetMapping("/nik/{nik}")
-    fun getUser(@PathVariable nik: String): ResponseEntity<Any> {
+    fun getPinjaman(@PathVariable nik: String): ResponseEntity<Any> {
         val pinjaman = pinjamanService.viewPinjamanByNik(nik)
 
-        if (!pinjaman.isEmpty) {
-            return ResponseEntity(pinjaman.get(), HttpStatus.OK) // Mengembalikan body dengan status OK
-        } else {
-            return ResponseEntity("Yah data $nik tidak ada", HttpStatus.BAD_REQUEST) // Jika data tidak ditemukan
-        }
+//        if (!pinjaman.isEmpty) {
+            return ResponseEntity(pinjaman, HttpStatus.OK) // Mengembalikan body dengan status OK
+//        } else {
+//            return ResponseEntity("Yah data $nik tidak ada", HttpStatus.BAD_REQUEST) // Jika data tidak ditemukan
+//        }
     }
 
     @GetMapping("/jatuh-tempo/{jatuhTempo}")
