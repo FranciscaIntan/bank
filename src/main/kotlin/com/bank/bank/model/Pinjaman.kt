@@ -33,7 +33,7 @@ class Pinjaman: AuditColumns() {
     var lamaPinjaman: Int = 0
 
     @Column(columnDefinition = "VARCHAR(15)", nullable = false)
-    var nomorFaktur: String? = ""
+    var nomorFaktur: String = ""
 
     var tanggalJatuhTempo: Timestamp? = null
 

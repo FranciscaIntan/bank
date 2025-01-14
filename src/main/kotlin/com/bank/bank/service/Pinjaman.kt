@@ -46,8 +46,11 @@ class PinjamanService(private val pinjamanRepository: PinjamanRepository) {
         return pinOut
     }
 
-    fun viewPinjamanByNik(nikKtp: String): PinjamanOut {
-        val pinjaman = pinjamanRepository.findAllByNikKtp(nikKtp)
+    fun viewPinjamanByNik(nikKtp: String): PinjamanOut? {
+        val pinjaman = pinjamanRepository.findOneByNikKtp(nikKtp)
+        if (pinjaman == null) {
+            return null
+        }
         var pinOut = PinjamanOut()
         pinOut.id = pinjaman.id
         pinOut.namaNasabah = pinjaman.namaNasabah

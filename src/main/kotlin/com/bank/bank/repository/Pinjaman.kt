@@ -42,9 +42,9 @@ interface PinjamanRepository : JpaRepository<Pinjaman, Long> {
     @Query("SELECT COUNT(id) FROM Pinjaman WHERE DATE(createdAt) = DATE(:createdAt)")
     fun CheckPinjamanCountToday(createdAt: Timestamp): Long
 
-    fun findAllByNikKtp(nikKtp: String): Pinjaman
+    fun findOneByNikKtp(nikKtp: String): Pinjaman?
 
-    fun findAllByNikKtpAndNomorFaktur(nikKtp: String, nomorFaktur: String): Optional<Pinjaman>
+    fun findOneByNikKtpAndNomorFaktur(nikKtp: String, nomorFaktur: String): Pinjaman?
 
     @Query("SELECT p FROM Pinjaman p WHERE DATE(p.tanggalJatuhTempo) >= :tanggalJatuhTempo AND p.statusPinjaman = :statusPinjaman")
     fun ViewJatuhTempoPinjaman(tanggalJatuhTempo: LocalDate, statusPinjaman: String): List<Pinjaman>

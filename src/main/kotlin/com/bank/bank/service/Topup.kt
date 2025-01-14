@@ -17,11 +17,11 @@ class TopupService(
 
     fun insertTopup(topup: TopupIn): TopupOut? {
         if (topup.nomorFaktur != "" && topup.nikKtp != "") {
-            val pinjaman = pinjamanRepository.findAllByNikKtpAndNomorFaktur(topup.nikKtp, topup.nomorFaktur)
-            if (pinjaman.isPresent) {
-                if (pinjaman.get().statusPinjaman == "Berjalan" && pinjaman.get().sisaPinjaman < pinjaman.get().jumlahPinjaman) {
-                    val sisaPinjaman = pinjaman.get().sisaPinjaman + topup.nominalTopup
-                    if (pinjaman.get().jumlahPinjaman >= sisaPinjaman) {
+            val pinjaman = pinjamanRepository.findOneByNikKtpAndNomorFaktur(topup.nikKtp, topup.nomorFaktur)
+            if (pinjaman != null) {
+                if (pinjaman.statusPinjaman == "Berjalan" && pinjaman.sisaPinjaman < pinjaman.jumlahPinjaman) {
+                    val sisaPinjaman = pinjaman.sisaPinjaman + topup.nominalTopup
+                    if (pinjaman.jumlahPinjaman >= sisaPinjaman) {
                         val now = Timestamp(System.currentTimeMillis())
                         var topupIns = Topup()
                         topupIns.nomorFaktur = topup.nomorFaktur
@@ -29,16 +29,16 @@ class TopupService(
                         topupIns.nominalTopup = topup.nominalTopup
                         topupIns.createdAt = now
                         topupIns.updatedAt = now
-                        topupIns.pinjaman = pinjaman.get()
+                        topupIns.pinjaman = pinjaman
                         val topupIn = topupRepository.saveAndFlush(topupIns)
                         val topupOut = TopupOut()
                         topupOut.nomorFaktur = topupIn.nomorFaktur
                         topupOut.nikKtp = topupIn.nikKtp
                         topupOut.nominalTopup = topupIn.nominalTopup
                         topupOut.id = topupIn.id
-                        pinjaman.get().sisaPinjaman = sisaPinjaman
-                        pinjaman.get().updatedAt = now
-                        pinjamanRepository.save(pinjaman.get())
+                        pinjaman.sisaPinjaman = sisaPinjaman
+                        pinjaman.updatedAt = now
+                        pinjamanRepository.save(pinjaman)
                         return topupOut
                     }
                 }
