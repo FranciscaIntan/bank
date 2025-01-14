@@ -18,33 +18,33 @@ class TopupService(
     fun insertTopup(topup: TopupIn): TopupOut? {
         if (topup.nomorFaktur != "" && topup.nikKtp != "") {
             val pinjaman = pinjamanRepository.findOneByNikKtpAndNomorFaktur(topup.nikKtp, topup.nomorFaktur)
-            if (pinjaman != null) {
-                if (pinjaman.statusPinjaman == "Berjalan" && pinjaman.sisaPinjaman < pinjaman.jumlahPinjaman) {
-                    val sisaPinjaman = pinjaman.sisaPinjaman + topup.nominalTopup
-                    if (pinjaman.jumlahPinjaman >= sisaPinjaman) {
-                        val now = Timestamp(System.currentTimeMillis())
-                        var topupIns = Topup()
-                        topupIns.nomorFaktur = topup.nomorFaktur
-                        topupIns.nikKtp = topup.nikKtp
-                        topupIns.nominalTopup = topup.nominalTopup
-                        topupIns.createdAt = now
-                        topupIns.updatedAt = now
-                        topupIns.pinjaman = pinjaman
-                        val topupIn = topupRepository.saveAndFlush(topupIns)
-                        val topupOut = TopupOut()
-                        topupOut.nomorFaktur = topupIn.nomorFaktur
-                        topupOut.nikKtp = topupIn.nikKtp
-                        topupOut.nominalTopup = topupIn.nominalTopup
-                        topupOut.id = topupIn.id
-                        pinjaman.sisaPinjaman = sisaPinjaman
-                        pinjaman.updatedAt = now
-                        pinjamanRepository.save(pinjaman)
-                        return topupOut
-                    }
-                }
-            } else {
+            if (pinjaman == null) {
                 return null
             }
+            if (pinjaman.statusPinjaman == "Berjalan" && pinjaman.sisaPinjaman < pinjaman.jumlahPinjaman) {
+                val sisaPinjaman = pinjaman.sisaPinjaman + topup.nominalTopup
+                if (pinjaman.jumlahPinjaman >= sisaPinjaman) {
+                    val now = Timestamp(System.currentTimeMillis())
+                    var topupIns = Topup()
+                    topupIns.nomorFaktur = topup.nomorFaktur
+                    topupIns.nikKtp = topup.nikKtp
+                    topupIns.nominalTopup = topup.nominalTopup
+                    topupIns.createdAt = now
+                    topupIns.updatedAt = now
+                    topupIns.pinjaman = pinjaman
+                    val topupIn = topupRepository.saveAndFlush(topupIns)
+                    val topupOut = TopupOut()
+                    topupOut.nomorFaktur = topupIn.nomorFaktur
+                    topupOut.nikKtp = topupIn.nikKtp
+                    topupOut.nominalTopup = topupIn.nominalTopup
+                    topupOut.id = topupIn.id
+                    pinjaman.sisaPinjaman = sisaPinjaman
+                    pinjaman.updatedAt = now
+                    pinjamanRepository.save(pinjaman)
+                    return topupOut
+                }
+            }
+
         }
         return null
     }

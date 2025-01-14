@@ -41,10 +41,10 @@ class CicilanService(
                     ci.createdAt = now
                     ci.updatedAt = now
                     ci.pinjaman = pinjaman
-                    var cicilanIns = cicilanRepository.saveAndFlush(ci)
+                    ci = cicilanRepository.saveAndFlush(ci)
                     sisaPinjaman -= cicilan.nominalCicilan
-                    var outCicilan = CicilanOut()
-                    outCicilan.nomorFaktur = cicilanIns.nomorFaktur
+                    val outCicilan = CicilanOut()
+                    outCicilan.nomorFaktur = ci.nomorFaktur
                     outCicilan.nikKtp = cicilan.nikKtp
                     outCicilan.nominalCicilan = cicilan.nominalCicilan
                     pinjaman.statusPinjaman = statusPinjaman
