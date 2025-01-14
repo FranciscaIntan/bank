@@ -21,7 +21,7 @@ class CicilanService(
         if (cicilan.nomorFaktur != "" && cicilan.nikKtp != "") {
             val pinjaman = pinjamanRepository.findOneByNikKtpAndNomorFaktur(cicilan.nikKtp, cicilan.nomorFaktur)
             if (pinjaman != null) {
-                if (cicilan.nominalCicilan <= pinjaman.sisaPinjaman) {
+                if (cicilan.nominalCicilan != 0 && cicilan.nominalCicilan <= pinjaman.sisaPinjaman) {
                     var statusPinjaman = pinjaman.statusPinjaman
                     var sisaPinjaman = pinjaman.sisaPinjaman
                     if (sisaPinjaman != null) {

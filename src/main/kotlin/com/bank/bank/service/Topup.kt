@@ -21,7 +21,7 @@ class TopupService(
             if (pinjaman == null) {
                 return null
             }
-            if (pinjaman.statusPinjaman == "Berjalan" && pinjaman.sisaPinjaman < pinjaman.jumlahPinjaman) {
+            if (pinjaman.statusPinjaman == "Berjalan" && pinjaman.sisaPinjaman < pinjaman.jumlahPinjaman && topup.nominalTopup != 0) {
                 val sisaPinjaman = pinjaman.sisaPinjaman + topup.nominalTopup
                 if (pinjaman.jumlahPinjaman >= sisaPinjaman) {
                     val now = Timestamp(System.currentTimeMillis())
